@@ -12,7 +12,7 @@
 ### Install packer from Chocolatey
 
 ```cmd
-choco install packer --version=1.4.4
+choco install packer --version=1.5.4
 ```
 
 ### Add firewal exclusions for TCP ports 8000-9000 (default range)
@@ -73,6 +73,33 @@ Example:
 ```
 
 * `prepare_neofetch.sh` -  default banner during after the login - change required fields you'd like to see in `provision.sh`
+
+### Note about Ios's and kickstart.
+
+The CentOS 7 templates use CentOS-7-x86_64-Everything-1908.iso
+
+The kickstart boot parameter (defined in templates\hv_centos7*) for this iso is `inst.stage2=hd:LABEL=CentOS\\x207\\x20x\\86_64`
+
+The CentOS 8 templates use CentOS-8.1.1911-x86_64-dvd1.iso
+
+The kickstart boot parameter (defined in templates\hv_centos8*) for this iso is `inst.stage2=hd:LABEL=CentOS-8-1-1911-x86_64-dvd`
+
+If the template is changed to use another iso file you have to make sure to update his setting in the template to the corresponding LABLE
+
+You can find the lable of an iso file by mouting it in a vm and issuing 
+
+```shell
+sudo lsblk -o name,mountpoint,label 
+```
+
+If the LABEL does not match the iso you will get an error message like
+
+```
+dracut-initqueue timeout 
+could not boot
+/dev/root does not exist
+```
+
 
 ## Templates Windows 2016
 
