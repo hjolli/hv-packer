@@ -1,0 +1,15 @@
+{
+    "iso_url":  "http://mirror.hh.se/centos/8.1.1911/isos/x86_64/CentOS-8.1.1911-x86_64-dvd1.iso",
+    "iso_checksum_type": "sha256",
+    "iso_checksum": "3ee3f4ea1538e026fff763e2b284a6f20b259d91d1ad5688f5783a67d279423b",
+    "vm_name": "packer-centos8-g2",
+    "disk_size": "60000",
+    "disk_additional_size":"150000",
+    "switch_name": "Homelan",
+    "output_directory": "output-centos8",
+    "output_vagrant": "./vbox/packer-centos-8-g2.box",
+    "vlan_id": "",
+    "vagrantfile_template": "./vagrant/hv_centos8_g2.template",
+    "ssh_password": "vagrant",
+    "provision_script_options": ""
+  }
