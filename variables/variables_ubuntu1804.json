@@ -1,0 +1,11 @@
+{
+	"iso_url": "http://cdimage.ubuntu.com/ubuntu/releases/bionic/release/ubuntu-18.04.4-server-amd64.iso",
+	"iso_checksum_type": "sha1",
+	"iso_checksum": "80f7872cb6bee3b5d7538d0edea8f3ff5ff89776",
+	"vm_name": "ubuntu-bionic",
+	"disk_size": "21440",
+	"hyperv_switchname": "home-network",
+	"output_directory": "output-ubuntu1804",
+	"username" : "vagrant",
+	"password" : "vagrant"
+}

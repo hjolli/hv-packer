@@ -1,0 +1,62 @@
+{
+  "builders": [
+  {
+    "type": "hyperv-iso",
+    "vm_name":"{{user `vm_name`}}",
+	"temp_path": ".",
+    "iso_url": "{{user `iso_url`}}",
+    "iso_checksum_type": "{{user `iso_checksum_type`}}",
+    "iso_checksum": "{{user `iso_checksum`}}",
+	"disk_size": "{{user `disk_size`}}",
+	"disk_block_size": "1",
+    "communicator":"ssh",
+    "ssh_username": "{{user `username`}}",
+    "ssh_password": "{{user `password`}}",	
+    "ssh_timeout" : "4h",
+	"shutdown_timeout": "30m",
+	"shutdown_command": "echo 'vagrant' | sudo -S -E shutdown -P now",
+	"memory": 2048,
+	"enable_dynamic_memory": "true",
+    "cpus": 2,
+    "generation": 2,
+	"switch_name":"{{user `hyperv_switchname`}}",
+	"vlan_id": "{{user `vlan_id`}}",
+	"http_directory": "./extra/files/gen2-ubuntu1804/http/",
+    "boot_wait": "5s",
+    "boot_command": [
+      "<esc><wait10><esc><esc><enter><wait>",
+      "set gfxpayload=1024x768<enter>",
+      "linux /install/vmlinuz ",
+      "preseed/url=http://{{.HTTPIP}}:{{.HTTPPort}}/18.04/preseed.cfg ",
+      "debian-installer=en_US.UTF-8 auto locale=en_US.UTF-8 kbd-chooser/method=us ",
+      "hostname={{.Name}} ",
+      "fb=false debconf/frontend=noninteractive ",
+      "keyboard-configuration/modelcode=SKIP keyboard-configuration/layout=USA ",
+      "keyboard-configuration/variant=USA console-setup/ask_detect=false <enter>",
+      "initrd /install/initrd.gz<enter>",
+      "boot<enter>"
+    ],
+	"guest_additions_mode":"disable",
+    "enable_secure_boot":false,
+	"output_directory": "{{ user `output_directory` }}"
+  }],
+  "provisioners": [{
+    "type": "shell",
+    "execute_command": "echo 'vagrant' | sudo -S -E sh {{.Path}}",
+    "scripts": [
+      "./extra/files/gen2-ubuntu1804/update.sh",
+      "./extra/files/gen2-ubuntu1804/network.sh",
+      "./extra/files/common/vagrant.sh",
+      "./extra/files/common/motd.sh",
+      "./extra/files/gen2-ubuntu1804/cleanup.sh"
+    ]
+  }],
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "keep_input_artifact": true,
+	  "vagrantfile_template": "./vagrant/hv_ubuntu1804_g2.template",
+      "output": "./vbox/ubuntu-18.04_chef.box"
+    }
+  ]
+}
